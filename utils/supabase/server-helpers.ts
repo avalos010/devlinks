@@ -41,3 +41,5 @@ export const signUp = async (formData: FormData) => {
 };
 
 export const signout = async () => await supabase.auth.signOut();
+
+export const isAuthenticated = {}; //!TODO figure out how to check id user i authenticated
