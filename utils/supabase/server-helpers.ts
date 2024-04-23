@@ -40,6 +40,30 @@ export const signUp = async (formData: FormData) => {
   return { data, error };
 };
 
-export const signout = async () => await supabase.auth.signOut();
+export const signout = async () => {
+  //!TODO! still doesnt work fix it
+  const { error } = await supabase.auth.signOut();
 
-export const isAuthenticated = {}; //!TODO figure out how to check id user i authenticated
+  if (!error) {
+    redirect("/login");
+  }
+};
+
+export const getUserId = async () => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return null;
+  }
+
+  return user.id;
+};
+
+export const isAuthenticated = async () => {
+  if (!getUserId) {
+    return false;
+  }
+  return true;
+};
