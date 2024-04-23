@@ -19,11 +19,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   // const auth = await isAuthenticated();
+  //TODO! figure out how to show navbar only to authencated users
   return (
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground">
-        {/* {isAuthenticated && <Nav />} */} //!TODO figure out how to show
-        navbar only to authencated users
+        {/* {isAuthenticated && <Nav />} */}
         <main className="min-h-screen flex flex-col items-center">
           {children}
         </main>
