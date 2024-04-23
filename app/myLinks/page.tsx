@@ -11,16 +11,16 @@ export default async function myLinks() {
 
   if (!user) {
     return redirect("/login");
-  } else {
-    const { data: links, error } = await supabase.from("links").select();
-
-    console.log(links, error);
-
-    return (
-      <div className="flex-1 w-full flex flex-col gap-20 items-center">
-        Protected
-        {links}
-      </div>
-    );
   }
+  const { data: links, error } = await supabase
+    .from("links")
+    .select()
+    .eq("userId", user.id);
+
+  return (
+    <div className="flex-1 w-full flex flex-col gap-20 items-center">
+      Protected
+      {links?.length}
+    </div>
+  );
 }
