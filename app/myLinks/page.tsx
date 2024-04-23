@@ -2,7 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 
 import { redirect } from "next/navigation";
 
-export default async function ProtectedPage() {
+export default async function myLinks() {
   const supabase = createClient();
 
   const {
@@ -11,11 +11,16 @@ export default async function ProtectedPage() {
 
   if (!user) {
     return redirect("/login");
-  }
+  } else {
+    const { data: links, error } = await supabase.from("links").select();
 
-  return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      Protected
-    </div>
-  );
+    console.log(links, error);
+
+    return (
+      <div className="flex-1 w-full flex flex-col gap-20 items-center">
+        Protected
+        {links}
+      </div>
+    );
+  }
 }
