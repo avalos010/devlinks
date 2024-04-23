@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { headers } from "next/headers";
-import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { SubmitButton } from "@/components/submitButton";
+import { signUp as signUpFunc } from "@/utils/supabase/server-helpers";
 
 export default function Signup({
   searchParams,
@@ -11,19 +10,7 @@ export default function Signup({
 }) {
   const signUp = async (formData: FormData) => {
     "use server";
-
-    const origin = headers().get("origin");
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const supabase = createClient();
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${origin}/auth/callback`,
-      },
-    });
+    const { data, error } = await signUpFunc(formData);
 
     if (error) {
       return redirect("/login?message=Could not authenticate user");
