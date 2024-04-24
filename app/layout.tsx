@@ -23,6 +23,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground">
+        {/* //TODO!: this doesnt work fix it*/}
         {auth ? <Nav /> : null}
         <main className="min-h-screen flex flex-col items-center">
           {children}
