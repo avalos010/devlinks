@@ -2,9 +2,10 @@ import { headers } from "next/headers";
 import { createClient } from "./server";
 import { redirect } from "next/navigation";
 
-const supabase = createClient();
+export const supabase = createClient();
 
 export const signIn = async (formData: FormData) => {
+  // "use server";
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
@@ -16,7 +17,8 @@ export const signIn = async (formData: FormData) => {
   if (error) {
     redirect("/login?message=Could not authenticate user");
   }
-  redirect("/myLinks");
+  console.log(data);
+  return redirect("/myLinks");
 };
 
 export const signUp = async (formData: FormData) => {
@@ -39,14 +41,6 @@ export const signUp = async (formData: FormData) => {
   return { data, error };
 };
 
-export const signout = async () => {
-  //!TODO! still doesnt work fix it
-  const { error } = await supabase.auth.signOut();
-  if (error) {
-    throw new Error("Could not signout"); // Throw an error or handle it appropriately
-  }
-};
-
 export const getUserId = async () => {
   const {
     data: { user },
@@ -59,7 +53,10 @@ export const getUserId = async () => {
 };
 
 export const isAuthenticated = async () => {
-  const { data: user } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   if (!user) {
     return false;
   }
