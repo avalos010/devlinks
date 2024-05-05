@@ -1,16 +1,10 @@
 import { createClient } from "@/utils/supabase/server";
+import { protectedPage } from "@/utils/supabase/server-helpers";
 import { redirect } from "next/navigation";
 import React from "react";
 
 async function LinkAdder() {
-  const supabase = createClient();
-  const { data } = await supabase.auth.getUser();
-
-  const { user } = data;
-
-  if (!user?.id) {
-    return redirect("/login");
-  }
+  await protectedPage();
   return <div>LinkAdder</div>;
 }
 

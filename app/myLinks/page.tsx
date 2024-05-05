@@ -1,21 +1,9 @@
-import { createClient } from "@/utils/supabase/server";
+import { getLinks, protectedPage } from "@/utils/supabase/server-helpers";
 import { randomUUID } from "crypto";
-import { redirect } from "next/navigation";
 
 export default async function myLinks() {
-  const supabase = createClient();
-  const { data } = await supabase.auth.getUser();
-
-  const { user } = data;
-
-  if (!user?.id) {
-    return redirect("/login");
-  }
-
-  const { data: links, error } = await supabase
-    .from("links")
-    .select()
-    .eq("userId", user.id);
+  await protectedPage();
+  const links = await getLinks();
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
