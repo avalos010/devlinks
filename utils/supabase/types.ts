@@ -60,7 +60,7 @@ export type Database = {
             columns: ["social"]
             isOneToOne: false
             referencedRelation: "socials"
-            referencedColumns: ["Name"]
+            referencedColumns: ["name"]
           },
           {
             foreignKeyName: "public_links_userId_fkey"
@@ -74,15 +74,15 @@ export type Database = {
       socials: {
         Row: {
           id: number
-          Name: string
+          name: string
         }
         Insert: {
           id?: number
-          Name?: string
+          name?: string
         }
         Update: {
           id?: number
-          Name?: string
+          name?: string
         }
         Relationships: []
       }

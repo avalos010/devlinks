@@ -1,5 +1,5 @@
 import { getLinks, protectedPage } from "@/utils/supabase/server-helpers";
-import { randomUUID } from "crypto";
+import Link from "next/link";
 
 export default async function myLinks() {
   await protectedPage();
@@ -7,11 +7,24 @@ export default async function myLinks() {
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      Protected
+      <h2>My Links</h2>
+      <Link
+        className=" dark:text-white light:text-black bg-transparent p-3 border-white border-dotted border-2 w-44 relative"
+        href="/myLinks/add"
+      >
+        Add Links
+        <span className="absolute right-7 text-xl">&#8594;</span>
+      </Link>
       {links?.map((link) => (
-        <p key={randomUUID()} className="text-red-500">
-          {link.id}
-        </p>
+        <a
+          href={link.link}
+          target="_blank"
+          key={link.id}
+          className="bg-gray-600 text-white p-3 md:w-96 relative w-80"
+        >
+          {link.social}
+          <span className="absolute right-7 text-xl">&#8594;</span>
+        </a>
       ))}
     </div>
   );

@@ -1,11 +1,14 @@
-import { createClient } from "@/utils/supabase/server";
 import { protectedPage } from "@/utils/supabase/server-helpers";
-import { redirect } from "next/navigation";
 import React from "react";
+import LinkAdder from "./LinkAdder";
 
-async function LinkAdder() {
+async function page() {
   await protectedPage();
-  return <div>LinkAdder</div>;
+  return (
+    <>
+      <LinkAdder />
+    </>
+  );
 }
 
-export default LinkAdder;
+export default page;
