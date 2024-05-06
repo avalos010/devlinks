@@ -4,9 +4,14 @@ import LinkAdder from "./LinkAdder";
 
 async function page() {
   await protectedPage();
+
+  const handleAddLink = async (formData: FormData, social: string) => {
+    "use server";
+    console.log(formData.get("link"), social);
+  };
   return (
     <>
-      <LinkAdder />
+      <LinkAdder handleAddLink={handleAddLink} />
     </>
   );
 }
