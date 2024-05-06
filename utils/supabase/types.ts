@@ -56,6 +56,13 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "links_social_fkey"
+            columns: ["social"]
+            isOneToOne: false
+            referencedRelation: "socials"
+            referencedColumns: ["Name"]
+          },
+          {
             foreignKeyName: "public_links_userId_fkey"
             columns: ["userId"]
             isOneToOne: false
@@ -63,6 +70,21 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      socials: {
+        Row: {
+          id: number
+          Name: string
+        }
+        Insert: {
+          id?: number
+          Name?: string
+        }
+        Update: {
+          id?: number
+          Name?: string
+        }
+        Relationships: []
       }
     }
     Views: {
