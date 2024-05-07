@@ -27,7 +27,7 @@ async function LinkAdder({ handleAddLink }: LinkAdderProps) {
           placeholder="Socials"
           isSearchable={true}
         />
-        <input name="link" type="text" />
+        <input className="text-black" name="link" type="text" />
         <button formAction={(e) => handleAddLink(e, selectedSocial as string)}>
           Add Link
         </button>

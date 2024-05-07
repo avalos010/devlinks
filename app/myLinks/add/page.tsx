@@ -1,13 +1,38 @@
 import { protectedPage } from "@/utils/supabase/server-helpers";
 import React from "react";
 import LinkAdder from "./LinkAdder";
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 
 async function page() {
   await protectedPage();
 
   const handleAddLink = async (formData: FormData, social: string) => {
     "use server";
-    console.log(formData.get("link"), social);
+    const supabase = createClient();
+    const link = formData.get("link") as string;
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    social;
+
+    if (user?.id) {
+      const { data: linksForSocial } = await supabase
+        .from("links")
+        .select("*")
+        .eq("social", social)
+        .eq("userId", user.id);
+
+      if (!linksForSocial?.length) {
+        //only add link if it doesnt already exist
+        await supabase.from("links").insert({ link, social, userId: user.id });
+        return redirect("/myLinks");
+      } else {
+        console.log(linksForSocial[0].id, link);
+        await supabase.from("links").update({ id: linksForSocial[0].id, link }); //TODO! DOesnt work
+        return redirect("/myLinks");
+      }
+    }
   };
   return (
     <>

@@ -15,17 +15,19 @@ export default async function myLinks() {
         Add Links
         <span className="absolute right-7 text-xl">&#8594;</span>
       </Link>
-      {links?.map((link) => (
-        <a
-          href={link.link}
-          target="_blank"
-          key={link.id}
-          className="bg-gray-600 text-white p-3 md:w-96 relative w-80"
-        >
-          {link.social}
-          <span className="absolute right-7 text-xl">&#8594;</span>
-        </a>
-      ))}
+      <div className="flex flex-col gap-4">
+        {links?.map((link) => (
+          <a
+            href={link.link}
+            target="_blank"
+            key={link.id}
+            className="bg-gray-600 text-white p-3 md:w-96 relative w-80"
+          >
+            {link.social}
+            <span className="absolute right-7 text-xl">&#8594;</span>
+          </a>
+        ))}
+      </div>
     </div>
   );
 }
