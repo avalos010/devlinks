@@ -5,40 +5,47 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
 async function page() {
-  await protectedPage();
+  try {
+    await protectedPage();
 
-  const handleAddLink = async (formData: FormData, social: string) => {
-    "use server";
-    const supabase = createClient();
-    const link = formData.get("link") as string;
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    social;
+    const handleAddLink = async (formData: FormData, social: string) => {
+      "use server";
 
-    if (user?.id) {
-      const { data: linksForSocial } = await supabase
-        .from("links")
-        .select("*")
-        .eq("social", social)
-        .eq("userId", user.id);
+      const supabase = createClient();
+      const link = formData.get("link") as string;
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-      if (!linksForSocial?.length) {
-        //only add link if it doesnt already exist
-        await supabase.from("links").insert({ link, social, userId: user.id });
-        return redirect("/myLinks");
-      } else {
-        console.log(linksForSocial[0].id, link);
-        await supabase.from("links").update({ id: linksForSocial[0].id, link }); //TODO! DOesnt work
-        return redirect("/myLinks");
+      if (user?.id) {
+        const { data: linksForSocial } = await supabase
+          .from("links")
+          .select("*")
+          .eq("social", social)
+          .eq("userId", user.id);
+
+        if (!linksForSocial?.length) {
+          //only add link if it doesnt already exist
+          await supabase
+            .from("links")
+            .insert({ link, social, userId: user.id });
+          return redirect("/myLinks");
+        } else {
+          await supabase.from("links").update({ link }).eq("userId", user.id);
+          return redirect("/myLinks");
+        }
       }
-    }
-  };
-  return (
-    <>
-      <LinkAdder handleAddLink={handleAddLink} />
-    </>
-  );
+    };
+
+    return (
+      <>
+        <LinkAdder handleAddLink={handleAddLink} />
+      </>
+    );
+  } catch (error) {
+    console.error("Error occurred while trying to add links:", error);
+    // return redirect("/error"); //TODO!:   Handle the error, e.g., redirect to an error page
+  }
 }
 
 export default page;
