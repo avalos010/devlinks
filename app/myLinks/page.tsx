@@ -1,5 +1,9 @@
 import { getLinks, protectedPage } from "@/utils/supabase/server-helpers";
+import { FaArrowRight, FaTrash } from "react-icons/fa";
 import Link from "next/link";
+import ActionButtons from "./action-buttons";
+import { Fragment } from "react";
+import { deleteLink } from "./actions";
 
 export default async function myLinks() {
   await protectedPage();
@@ -17,15 +21,16 @@ export default async function myLinks() {
       </Link>
       <div className="flex flex-col gap-4">
         {links?.map((link) => (
-          <a
-            href={link.link}
-            target="_blank"
-            key={link.id}
-            className="bg-gray-600 text-white p-3 md:w-96 relative w-80"
-          >
-            {link.social}
-            <span className="absolute right-7 text-xl">&#8594;</span>
-          </a>
+          <div className="bg-gray-600 text-white p-3 md:w-96 relative w-80">
+            <a
+              href={link.link}
+              target="_blank"
+              className="border-b-4 pb-1 hover:border-red-500 border-transparent"
+            >
+              {link.social}
+            </a>
+            <ActionButtons linkId={link.id} deleteLink={deleteLink} />
+          </div>
         ))}
       </div>
     </div>
