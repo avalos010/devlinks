@@ -7,7 +7,7 @@ const Nav = async () => {
     <div className="flex flex-row ">
       <ul className="flex flex-row">
         <Link href={"/myLinks"}>MyLinks</Link>
-        <Link href={"/details"}>Profile Details</Link>
+        <Link href={"/profile"}>Profile</Link>
         <SignOut />
       </ul>
     </div>

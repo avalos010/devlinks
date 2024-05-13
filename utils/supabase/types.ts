@@ -71,6 +71,35 @@ export type Database = {
           },
         ]
       }
+      profile: {
+        Row: {
+          first_name: string | null
+          id: number
+          last_name: string | null
+          user_id: string | null
+        }
+        Insert: {
+          first_name?: string | null
+          id?: number
+          last_name?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          first_name?: string | null
+          id?: number
+          last_name?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profile_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       socials: {
         Row: {
           id: number
