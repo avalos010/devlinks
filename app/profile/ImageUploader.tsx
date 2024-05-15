@@ -18,7 +18,7 @@ function ImageUploader() {
 
     // Upload file using standard upload
     const { data, error } = await supabase.storage
-      .from("Avatar")
+      .from("profileImages")
       .upload(`${user?.id}/profileImage`, file, { upsert: true }); //upsert: true means we could overwrite the image.
     if (error) {
       console.error(error.message); //TODO!: Handle ERROR

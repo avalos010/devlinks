@@ -21,18 +21,21 @@ export default async function ProtectedPage() {
     .single();
 
   //TODO! NOT WORKING
-  const { data } = await supabase.storage //Get Profile Picture
-    .from("Avatar")
-    .createSignedUrl(`${user?.id}/profileImage`, 300);
+  const {
+    data: { publicUrl },
+  } = supabase.storage //Get Profile Picture
+    .from("profileImages")
+    .getPublicUrl(`${user?.id}/profileImage`);
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
       Profile
       <Image
-        src={data?.signedUrl as string}
+        src={publicUrl}
         alt="profile image"
-        width={500}
-        height={500}
+        width={200}
+        height={150}
+        className="rounded-full"
       />
       <ImageUploader />
       <p>{profile?.first_name}</p>
