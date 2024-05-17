@@ -1,9 +1,7 @@
-import { getLinks, protectedPage } from "@/utils/supabase/server-helpers";
-import { FaArrowRight, FaTrash } from "react-icons/fa";
+import { protectedPage } from "@/utils/supabase/server-helpers";
 import Link from "next/link";
 import ActionButtons from "./action-buttons";
-import { Fragment } from "react";
-import { deleteLink } from "./actions";
+import { deleteLink, getLinks } from "@/services/supabaseServices";
 
 export default async function myLinks() {
   await protectedPage();

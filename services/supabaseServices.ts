@@ -94,3 +94,28 @@ export const signUp = async (formData: FormData) => {
 
   return redirect("/login?message=Check email to continue sign in process");
 };
+
+export async function deleteLink(linkId: string | number) {
+  "use server";
+  const supabase = createClient();
+  const { error } = await supabase.from("links").delete().eq("id", linkId);
+
+  if (!error) {
+    redirect("/myLinks");
+  }
+}
+
+export const getLinks = async () => {
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user?.id) {
+    const { data: links, error } = await supabase
+      .from("links")
+      .select()
+      .eq("userId", user.id);
+    return links;
+  }
+};
