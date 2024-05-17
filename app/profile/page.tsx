@@ -20,23 +20,38 @@ export default async function ProtectedPage() {
     .limit(1)
     .single();
 
-  //TODO! NOT WORKING
-  const {
-    data: { publicUrl },
-  } = supabase.storage //Get Profile Picture
+  // check if user has image under there bucket. we always get a public url even if it  doesnt exist.
+  const { data: profileBucketList } = await supabase.storage
     .from("profileImages")
-    .getPublicUrl(`${user?.id}/profileImage`);
+    .list(`${user?.id}`);
+
+  let imageUrl = null;
+
+  if (!!profileBucketList?.length) {
+    //if so get the image
+    const {
+      data: { publicUrl },
+    } = supabase.storage //Get Profile Picture
+      .from("profileImages")
+      .getPublicUrl(`${user?.id}/profileImage`);
+
+    imageUrl = publicUrl;
+  }
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
       Profile
-      <Image
-        src={publicUrl}
-        alt="profile image"
-        width={200}
-        height={150}
-        className="rounded-full"
-      />
+      {imageUrl ? (
+        <Image
+          src={imageUrl}
+          alt="profile image"
+          width={200}
+          height={150}
+          className="rounded-full"
+        />
+      ) : (
+        <h3>No profile image uploaded</h3>
+      )}
       <ImageUploader />
       <p>{profile?.first_name}</p>
       <p>{profile?.last_name}</p>
