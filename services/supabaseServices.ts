@@ -1,4 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const getUser = async () => {
   const supabase = createClient();
@@ -52,4 +54,43 @@ export const getProfileImageUrl = async (userId: string) => {
     return data.publicUrl;
   }
   return null;
+};
+
+export const signIn = async (formData: FormData) => {
+  "use server";
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+  const supabase = createClient();
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    return redirect("/login?message=Could not authenticate user");
+  }
+  return redirect("/myLinks");
+};
+
+export const signUp = async (formData: FormData) => {
+  "use server";
+  const supabase = createClient();
+  const origin = headers().get("origin");
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: `${origin}/auth/callback`,
+    },
+  });
+
+  if (error) {
+    return redirect("/login?message=Could not authenticate user");
+  }
+
+  return redirect("/login?message=Check email to continue sign in process");
 };

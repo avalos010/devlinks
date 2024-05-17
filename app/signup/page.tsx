@@ -1,24 +1,12 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { SubmitButton } from "@/components/submitButton";
-import { signUp as signUpFunc } from "@/utils/supabase/server-helpers";
+import { signUp } from "@/services/supabaseServices";
 
 export default function Signup({
   searchParams,
 }: {
   searchParams: { message: string };
 }) {
-  const signUp = async (formData: FormData) => {
-    "use server";
-    const { data, error } = await signUpFunc(formData);
-
-    if (error) {
-      return redirect("/login?message=Could not authenticate user");
-    }
-
-    return redirect("/login?message=Check email to continue sign in process");
-  };
-
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
       <Link
