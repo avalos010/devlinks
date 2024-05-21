@@ -14,8 +14,6 @@ function ImageUploader() {
       data: { user },
     } = await supabase.auth.getUser();
 
-    console.log(user?.id);
-
     // Upload file using standard upload
     const { data, error } = await supabase.storage
       .from("profileImages")

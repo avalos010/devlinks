@@ -19,7 +19,10 @@ export default async function myLinks() {
       </Link>
       <div className="flex flex-col gap-4">
         {links?.map((link) => (
-          <div className="bg-gray-600 text-white p-3 md:w-96 relative w-80">
+          <div
+            className="bg-gray-600 text-white p-3 md:w-96 relative w-80"
+            key={link.id}
+          >
             <a
               href={link.link}
               target="_blank"

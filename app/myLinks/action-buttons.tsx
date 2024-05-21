@@ -1,7 +1,6 @@
 "use client";
 
 import { FaTrash } from "react-icons/fa";
-import { deleteLink } from "./actions";
 
 type ActionButtonsProps = {
   linkId: string | number;
