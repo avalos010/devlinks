@@ -16,7 +16,7 @@ export default async function ProtectedPage() {
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      Profile
+      My Profile
       {imageUrl ? (
         <Image src={imageUrl} alt="profile image" width={150} height={150} />
       ) : (
@@ -24,7 +24,7 @@ export default async function ProtectedPage() {
       )}
       <ImageUploader />
       <p>{profile?.first_name}</p>
-      <p>{profile?.last_name}</p>15
+      <p>{profile?.last_name}</p>
     </div>
   );
 }
