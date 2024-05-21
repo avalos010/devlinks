@@ -37,24 +37,34 @@ export type Database = {
     Tables: {
       links: {
         Row: {
+          handle: string | null
           id: number
           link: string
           social: string
           userId: string
         }
         Insert: {
+          handle?: string | null
           id?: number
           link: string
           social: string
           userId: string
         }
         Update: {
+          handle?: string | null
           id?: number
           link?: string
           social?: string
           userId?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "links_handle_fkey"
+            columns: ["handle"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["handle"]
+          },
           {
             foreignKeyName: "links_social_fkey"
             columns: ["social"]
