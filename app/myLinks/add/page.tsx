@@ -24,11 +24,17 @@ async function page() {
           .eq("social", social)
           .eq("userId", user.id);
 
+        const { data: profile } = await supabase
+          .from("profile")
+          .select("handle")
+          .eq("user_id", user.id)
+          .single();
+
         if (!linksForSocial?.length) {
           //only add link if it doesnt already exist
           await supabase
             .from("links")
-            .insert({ link, social, userId: user.id });
+            .insert({ link, social, userId: user.id, handle: profile?.handle });
           return redirect("/myLinks");
         } else {
           await supabase.from("links").update({ link }).eq("userId", user.id);
