@@ -74,18 +74,21 @@ export type Database = {
       profile: {
         Row: {
           first_name: string | null
+          handle: string
           id: number
           last_name: string | null
           user_id: string | null
         }
         Insert: {
           first_name?: string | null
+          handle: string
           id?: number
           last_name?: string | null
           user_id?: string | null
         }
         Update: {
           first_name?: string | null
+          handle?: string
           id?: number
           last_name?: string | null
           user_id?: string | null

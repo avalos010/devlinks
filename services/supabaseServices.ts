@@ -30,6 +30,23 @@ export const getUserProfile = async (userId: string) => {
   return data;
 };
 
+export const getUserHandleProfile = async (handle: string) => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("profile")
+    .select("*")
+    .eq("handle", handle)
+    .limit(1)
+    .single();
+
+  if (error) {
+    console.error("Error fetching profile:", error);
+    return null;
+  }
+  return data;
+};
+
 export const getProfileImageUrl = async (userId: string) => {
   const supabase = createClient();
 
@@ -105,7 +122,7 @@ export async function deleteLink(linkId: string | number) {
   }
 }
 
-export const getLinks = async () => {
+export const getOwnLinks = async () => {
   const supabase = createClient();
   const {
     data: { user },
@@ -118,4 +135,13 @@ export const getLinks = async () => {
       .eq("userId", user.id);
     return links;
   }
+};
+
+export const getHandleLinks = async (handle: string) => {
+  const supabase = createClient();
+  const { data: links, error } = await supabase
+    .from("links")
+    .select()
+    .eq("handle", handle);
+  return links;
 };

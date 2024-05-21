@@ -1,11 +1,11 @@
 import { protectedPage } from "@/utils/supabase/server-helpers";
 import Link from "next/link";
 import ActionButtons from "./action-buttons";
-import { deleteLink, getLinks } from "@/services/supabaseServices";
+import { deleteLink, getOwnLinks } from "@/services/supabaseServices";
 
 export default async function myLinks() {
   await protectedPage();
-  const links = await getLinks();
+  const links = await getOwnLinks();
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
