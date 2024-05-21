@@ -70,7 +70,11 @@ export const getProfileImageUrl = async (userId: string) => {
     }
     return data.publicUrl;
   }
-  return null;
+
+  const { data } = supabase.storage
+    .from("profileImages")
+    .getPublicUrl(`default/profileImage`);
+  return data.publicUrl;
 };
 
 export const signIn = async (formData: FormData) => {
