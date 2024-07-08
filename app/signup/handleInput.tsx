@@ -1,5 +1,5 @@
 "use client";
-import { checkIfHandleExist } from "@/services/supabaseServices";
+import { TIMEOUT } from "dns";
 import React, { useEffect, useRef, useState } from "react";
 
 type HandleInputProps = {
@@ -7,18 +7,24 @@ type HandleInputProps = {
 };
 
 const HandleInput = ({ handleCheck }: HandleInputProps) => {
-  const handleRef = useRef(null!);
   const [handle, setHandle] = useState("");
   const [handleExist, setHandleExist] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   async function isHandleAvailable() {
     setHandleExist(await handleCheck(handle));
   }
 
   useEffect(() => {
-    isHandleAvailable();
-  }, [handle]);
+    timeoutRef.current = setTimeout(isHandleAvailable, 500);
 
+    // Cleanup function to clear the timeout when the component unmounts
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [handle]);
   return (
     <>
       <label className="text-md" htmlFor="password">
