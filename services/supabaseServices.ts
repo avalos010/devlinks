@@ -149,3 +149,34 @@ export const getHandleLinks = async (handle: string) => {
     .eq("handle", handle);
   return links;
 };
+
+export const checkIfHandleExist = async (handle: string) => {
+  "use server";
+  const supabase = createClient();
+
+  const handleCount = (
+    await supabase.from("profile").select("*").eq("handle", handle)
+  ).data?.length;
+
+  if (handleCount && handleCount > 0) {
+    return true;
+  }
+
+  return false;
+};
+
+export const createProfile = async (handle: string) => {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const handleExist = await checkIfHandleExist(handle);
+
+  if (handleExist) {
+    await supabase
+      .from("profile")
+      .insert({ handle: handle, user_id: user?.id });
+  }
+};

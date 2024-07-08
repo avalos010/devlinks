@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SubmitButton } from "@/components/submitButton";
-import { signUp } from "@/services/supabaseServices";
+import { checkIfHandleExist, signUp } from "@/services/supabaseServices";
+import HandleInput from "./handleInput";
 
 export default function Signup({
   searchParams,
@@ -40,6 +41,9 @@ export default function Signup({
           placeholder="you@example.com"
           required
         />
+
+        <HandleInput handleCheck={checkIfHandleExist} />
+
         <label className="text-md" htmlFor="password">
           Password
         </label>
