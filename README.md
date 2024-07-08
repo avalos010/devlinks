@@ -1,6 +1,6 @@
 ## devlinks: A Tailwind-Styled Link Organizer with Next.js, Supabase, and User Authentication
 
-This project showcases a link organizer application built with Next.js, Supabase, and Tailwind CSS. It offers a performant, scalable, and visually appealing solution for managing your saved links, with user authentication for a secure and personalized experience. While links themselves are currently public, the application demonstrates potential for future features like private links.
+This project showcases a link organizer application built with Next.js, Supabase, and Tailwind CSS. It offers a performant and scalable solution for managing your saved links, with user authentication for a secure and personalized experience. While links are currently public, the application demonstrates the potential for future features like private links.
 
 **Features:**
 
