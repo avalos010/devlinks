@@ -155,7 +155,7 @@ export const checkIfHandleExist = async (handle: string) => {
   const supabase = createClient();
 
   const handleCount = (
-    await supabase.from("profile").select("*").eq("handle", handle)
+    await supabase.from("profile").select("*").ilike("handle", handle)
   ).data?.length;
 
   if (handleCount && handleCount > 0) {

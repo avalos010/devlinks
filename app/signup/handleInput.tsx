@@ -1,5 +1,4 @@
 "use client";
-import { TIMEOUT } from "dns";
 import React, { useEffect, useRef, useState } from "react";
 
 type HandleInputProps = {
